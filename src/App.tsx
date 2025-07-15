@@ -1,7 +1,7 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
+import TiptapEditor from "./component/Editor";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -13,37 +13,19 @@ function App() {
   }
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
+    <main className="flex flex-col min-h-screen bg-white text-zinc-900">
+      <h1>Welcome to Kortex!</h1>
+      <div className="flex flex-row w-full border-black mx-auto rounded-xl min-h-[80vh] p-4">
+        <aside className="bg-gray-50 min-w-[300px] border-black mx-auto rounded-xl min-h-[400px]">
+          
+        </aside>
+        <main className="p-4 bg-white items-start w-full  border-black mx-auto rounded-xl min-h-[400px]">
 
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+          <TiptapEditor/>  
+
+        </main>
+
       </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
     </main>
   );
 }
