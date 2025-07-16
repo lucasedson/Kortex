@@ -3,18 +3,24 @@ import { BubbleMenu } from '@tiptap/react/menus'
 import StarterKit from '@tiptap/starter-kit';
 import React, { useState, useEffect } from 'react';
 import { RxFontBold, RxFontItalic, RxStrikethrough, RxUnderline, RxCode } from 'react-icons/rx';
+import { Placeholder } from '@tiptap/extensions'
 
 const TiptapEditor = () => {
 
 
     const editor = useEditor({
     extensions: [
-      StarterKit,
+        Placeholder.configure({
+            placeholder: 'Use `/` to add a command',
+
+            
+        }),
+        StarterKit,
     ],
-    content: '<h1>Hi there</h1><p>How are you??</p>',
+
     editorProps: {
       attributes: {
-        class: 'h-[90vh] focus:outline-none text-left items-start',
+        class: 'min-h-[90vh] focus:outline-none text-left items-start',
       },
     }
     
@@ -30,14 +36,21 @@ const TiptapEditor = () => {
   }, [isEditable, editor])
 
   return (
-    <div className='min-h-full w-[100%] mx-auto shadow-lg max-w-[70vw] pt-16 pl-4 pr-4'>
-
-        <EditorContent editor={editor}  className='prose prose-red '/>
+    <div className='min-h-full w-[100%] mx-auto shadow-lg max-w-[70vw] pt-16 pl-4 pr-4 prose prose-red prose-h1:text-left'>
+        
+    
+    
+        <EditorContent editor={editor}  
+        className=''
+        
+        
+        
+        />
 
         {editor && (
           <BubbleMenu
             editor={editor}
-            className=' border border-zinc-100 rounded-lg flex divide-yellow-500 divide-x'
+            className=' border bg-slate-50 border-zinc-100 rounded-lg gap-1 flex divide-x divide-black'
             shouldShow={({ editor }) => {
               const { selection } = editor.state
               const { empty } = selection
@@ -74,7 +87,7 @@ const TiptapEditor = () => {
 
             <button
               onClick={() => editor.chain().focus().toggleCode().run()}
-              className='flex gap-1.5 text-xs leading-none items-center rounded-none shadow-none bg-transparent border-none p-2 hover:bg-zinc-100'
+              className='flex gap-1.5 text-sm leading-none items-center rounded-none shadow-none bg-transparent border-none p-2 hover:bg-zinc-100'
             >
             <RxCode className='' />
             </button>

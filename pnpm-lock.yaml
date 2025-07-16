@@ -11,15 +11,24 @@ importers:
       '@tauri-apps/api':
         specifier: ^2
         version: 2.6.0
+      '@tauri-apps/plugin-dialog':
+        specifier: ~2.3.0
+        version: 2.3.0
+      '@tauri-apps/plugin-fs':
+        specifier: ~2.4.0
+        version: 2.4.0
       '@tauri-apps/plugin-opener':
         specifier: ^2
         version: 2.4.0
       '@tauri-apps/plugin-store':
-        specifier: ^2.3.0
+        specifier: ~2
         version: 2.3.0
       '@tiptap/extension-bubble-menu':
         specifier: ^3.0.3
         version: 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
+      '@tiptap/extensions':
+        specifier: ^3.0.5
+        version: 3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
       '@tiptap/pm':
         specifier: ^3.0.3
         version: 3.0.3
@@ -546,6 +555,12 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
+  '@tauri-apps/plugin-dialog@2.3.0':
+    resolution: {integrity: sha512-ylSBvYYShpGlKKh732ZuaHyJ5Ie1JR71QCXewCtsRLqGdc8Is4xWdz6t43rzXyvkItM9syNPMvFVcvjgEy+/GA==}
+
+  '@tauri-apps/plugin-fs@2.4.0':
+    resolution: {integrity: sha512-Sp8AdDcbyXyk6LD6Pmdx44SH3LPeNAvxR2TFfq/8CwqzfO1yOyV+RzT8fov0NNN7d9nvW7O7MtMAptJ42YXA5g==}
+
   '@tauri-apps/plugin-opener@2.4.0':
     resolution: {integrity: sha512-43VyN8JJtvKWJY72WI/KNZszTpDpzHULFxQs0CJBIYUdCRowQ6Q1feWTDb979N7nldqSuDOaBupZ6wz2nvuWwQ==}
 
@@ -679,11 +694,11 @@ packages:
     peerDependencies:
       '@tiptap/core': ^3.0.3
 
-  '@tiptap/extensions@3.0.3':
-    resolution: {integrity: sha512-lNrXNsYzhqDhP+eXkSceXRAPW2IqgkN6qSF0Gukwh9eO2x2M6A/ofzHen+TsrpaeeKiKl5+Ix56PUyOdbIP5Fw==}
+  '@tiptap/extensions@3.0.5':
+    resolution: {integrity: sha512-NJWqSI8oCWyFdOmmeDugxsTflbU7t/qNmO+x8ytQhrGV592iFzA5tyZgFwpT3oxzILxtHZAkmMS+PYRMnHi8eQ==}
     peerDependencies:
-      '@tiptap/core': ^3.0.3
-      '@tiptap/pm': ^3.0.3
+      '@tiptap/core': ^3.0.5
+      '@tiptap/pm': ^3.0.5
 
   '@tiptap/pm@3.0.3':
     resolution: {integrity: sha512-gK1B+ZqG+tq1lQwTOblnIJ7uPdxulwD8CsrTwC1l1d80GkfYVJUpYICuXPZzL3hFTKqTYh0rAchkdWCqD8ikng==}
@@ -1788,6 +1803,14 @@ snapshots:
       '@tauri-apps/cli-win32-ia32-msvc': 2.6.2
       '@tauri-apps/cli-win32-x64-msvc': 2.6.2
 
+  '@tauri-apps/plugin-dialog@2.3.0':
+    dependencies:
+      '@tauri-apps/api': 2.6.0
+
+  '@tauri-apps/plugin-fs@2.4.0':
+    dependencies:
+      '@tauri-apps/api': 2.6.0
+
   '@tauri-apps/plugin-opener@2.4.0':
     dependencies:
       '@tauri-apps/api': 2.6.0
@@ -1831,9 +1854,9 @@ snapshots:
     dependencies:
       '@tiptap/core': 3.0.3(@tiptap/pm@3.0.3)
 
-  '@tiptap/extension-dropcursor@3.0.3(@tiptap/extensions@3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))':
+  '@tiptap/extension-dropcursor@3.0.3(@tiptap/extensions@3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))':
     dependencies:
-      '@tiptap/extensions': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
+      '@tiptap/extensions': 3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
 
   '@tiptap/extension-floating-menu@3.0.3(@floating-ui/dom@1.7.2)(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)':
     dependencies:
@@ -1842,9 +1865,9 @@ snapshots:
       '@tiptap/pm': 3.0.3
     optional: true
 
-  '@tiptap/extension-gapcursor@3.0.3(@tiptap/extensions@3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))':
+  '@tiptap/extension-gapcursor@3.0.3(@tiptap/extensions@3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))':
     dependencies:
-      '@tiptap/extensions': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
+      '@tiptap/extensions': 3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
 
   '@tiptap/extension-hard-break@3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))':
     dependencies:
@@ -1902,7 +1925,7 @@ snapshots:
     dependencies:
       '@tiptap/core': 3.0.3(@tiptap/pm@3.0.3)
 
-  '@tiptap/extensions@3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)':
+  '@tiptap/extensions@3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)':
     dependencies:
       '@tiptap/core': 3.0.3(@tiptap/pm@3.0.3)
       '@tiptap/pm': 3.0.3
@@ -1952,8 +1975,8 @@ snapshots:
       '@tiptap/extension-code': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
       '@tiptap/extension-code-block': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
       '@tiptap/extension-document': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
-      '@tiptap/extension-dropcursor': 3.0.3(@tiptap/extensions@3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))
-      '@tiptap/extension-gapcursor': 3.0.3(@tiptap/extensions@3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))
+      '@tiptap/extension-dropcursor': 3.0.3(@tiptap/extensions@3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))
+      '@tiptap/extension-gapcursor': 3.0.3(@tiptap/extensions@3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3))
       '@tiptap/extension-hard-break': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
       '@tiptap/extension-heading': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
       '@tiptap/extension-horizontal-rule': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
@@ -1967,7 +1990,7 @@ snapshots:
       '@tiptap/extension-strike': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
       '@tiptap/extension-text': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
       '@tiptap/extension-underline': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))
-      '@tiptap/extensions': 3.0.3(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
+      '@tiptap/extensions': 3.0.5(@tiptap/core@3.0.3(@tiptap/pm@3.0.3))(@tiptap/pm@3.0.3)
       '@tiptap/pm': 3.0.3
 
   '@types/babel__core@7.20.5':
