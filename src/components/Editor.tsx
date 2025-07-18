@@ -1,8 +1,9 @@
 import { useEditor, EditorContent} from '@tiptap/react';
-import { BubbleMenu } from '@tiptap/react/menus'
+import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus'
 import StarterKit from '@tiptap/starter-kit';
 import React, { useState, useEffect } from 'react';
-import { RxFontBold, RxFontItalic, RxStrikethrough, RxUnderline, RxCode } from 'react-icons/rx';
+import { RxFontBold, RxFontItalic, RxStrikethrough, RxUnderline, RxCode, RxTable, RxLink1, RxHeading  } from 'react-icons/rx';
+import { PiSigmaFill } from "react-icons/pi";
 import { Placeholder } from '@tiptap/extensions'
 import {Markdown} from 'tiptap-markdown';
 
@@ -62,6 +63,45 @@ const TiptapEditor = ({ fileContent }: EditorProps) => {
         />
 
         {editor && (
+          
+          <FloatingMenu
+            editor={editor}
+            className=' border bg-slate-50 border-zinc-100 rounded-lg gap-1 flex divide-x divide-black'
+            shouldShow={({ state }) => {
+              const {$from} = state.selection
+              const currentLine = $from.nodeBefore?.textContent
+              return currentLine?.startsWith('/') ? true : false
+            }}
+          >
+            <div className='flex flex-col gap-1.5 text-xs leading-none items-center rounded-none shadow-none bg-gray-500/10 border-none p-2'>
+              {/* <h2>Lista de comandos</h2> */}
+
+              <div className='flex gap-3 text-xs leading-none items-center rounded-none shadow-none bg-transparent border-none p-2'>
+               <button className='shadow text-xl' onClick={() =>
+                {
+
+                  editor.commands.clearContent()
+
+                  editor.chain().focus().insertContent('# ').run()
+                }
+                }>
+                <RxHeading />
+               </button>
+
+                <button className='shadow text-xl'>
+                  <RxCode />
+                </button>
+
+                <button className='shadow text-xl'>
+                  <RxTable />
+                </button>
+              </div>
+
+            </div>
+          </FloatingMenu>
+        )}
+
+        {editor && (
           <BubbleMenu
             editor={editor}
             className=' border bg-slate-50 border-zinc-100 rounded-lg gap-1 flex divide-x divide-black'
@@ -105,6 +145,21 @@ const TiptapEditor = ({ fileContent }: EditorProps) => {
             >
             <RxCode className='' />
             </button>
+
+            <button
+              onClick={() => editor.chain().focus().toggleLink().run()}
+              className='flex gap-1.5 text-sm leading-none items-center rounded-none shadow-none bg-transparent border-none p-2 hover:bg-zinc-100'
+            >
+            <RxLink1 className='' />
+            </button>
+
+            <button className='flex gap-1.5 text-sm leading-none items-center rounded-none shadow-none bg-transparent border-none p-2 hover:bg-zinc-100'
+              onClick={() => editor.chain().focus().insertContent('<h1 />').run()}
+            >
+              <PiSigmaFill />
+            </button>
+
+
           </BubbleMenu>
         )}
         
