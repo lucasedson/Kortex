@@ -21,6 +21,8 @@
     "noFallthroughCasesInSwitch": true,
 
       "paths": {
+      "@/components/*": ["./src/components/components/*"],
+      "@/lib/*": ["./src/lib/*"],
       "@tauri-apps/api/*": ["./node_modules/@tauri-apps/api/dist-js/*"]
     }
   },

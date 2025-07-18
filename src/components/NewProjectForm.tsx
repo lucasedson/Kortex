@@ -1,9 +1,12 @@
-// src/components/NewProjectForm.jsx
 import { useState } from 'react';
-import { createNewProject, openProject, actualProject } from '../lib/ProjectManager';
+import { createNewProject, openProject } from '../lib/ProjectManager';
 import { RxFile, RxPlus, RxReload } from 'react-icons/rx';
 
-export function NewProjectForm() {
+interface NewProjectFormProps {
+  onProjectCreated: (projectPath: string | null) => void;
+}
+
+export function NewProjectForm({ onProjectCreated }: NewProjectFormProps) {
   const [projectName, setProjectName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -11,22 +14,19 @@ export function NewProjectForm() {
     event.preventDefault();
     setIsLoading(true);
     
-    await createNewProject(projectName);
+    const path = await createNewProject(projectName);
+    onProjectCreated(path);
 
     setIsLoading(false);
   };
 
   const handleOpenDialog = async () => {
-    await openProject();
-  };
-
-  const viewProject = async () => {
-    actualProject();
+    const path = await openProject();
+    onProjectCreated(path);
   };
 
   return (
     <div className="flex p-8 border-t border-gray-200 dark:border-gray-700 gap-1">
-      <button onClick={viewProject}>Actual Project</button>
       <form onSubmit={handleSubmit} className="flex gap-2">
         <input
           type="text"
