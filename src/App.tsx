@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { readTextFile, BaseDirectory } from "@tauri-apps/plugin-fs";
 import "./App.css";
 import { HomePage } from "./components/HomePage";
 import { Sidebar } from "./components/Sidebar";
@@ -13,6 +14,8 @@ function App() {
   const [projectName, setProjectName] = useState("Nenhum projeto aberto");
   const [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
+  const [currentFilePath, setCurrentFilePath] = useState<string | null>(null);
+  const [currentFileContent, setCurrentFileContent] = useState<string>("");
 
   useEffect(() => {
     const getProject = async () => {
@@ -56,6 +59,17 @@ function App() {
     setProjectPath(null); // Limpa o projeto atual para exibir o formulário
   };
 
+  const handleFileOpen = async (filePath: string) => {
+    try {
+      const content = await readTextFile(filePath, { dir: BaseDirectory.Home }); // Assuming files are within user's home directory for simplicity, adjust as needed
+      setCurrentFilePath(filePath);
+      setCurrentFileContent(content);
+    } catch (error) {
+      console.error("Failed to read file:", error);
+      setCurrentFileContent(`Error: Could not read file ${filePath}`);
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen bg-white text-zinc-900 dark:bg-gray-900 dark:text-zinc-50">
       <AppMenu onNewProjectClick={handleNewProjectClick} />
@@ -64,12 +78,13 @@ function App() {
           projectPath={projectPath}
           onProjectExplorerError={handleProjectExplorerError}
           updateStatusMessage={updateStatusMessage}
+          onFileOpen={handleFileOpen}
         />
         <main className="flex-grow p-4 overflow-y-auto">
           {showNewProjectForm ? (
             <NewProjectForm onProjectCreated={handleProjectChange} />
           ) : projectPath ? (
-            <TiptapEditor />
+            <TiptapEditor fileContent={currentFileContent} />
           ) : (
             <HomePage onProjectCreated={handleProjectChange} />
           )}
@@ -81,4 +96,5 @@ function App() {
 }
 
 export default App;
+
 

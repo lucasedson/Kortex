@@ -81,6 +81,11 @@ fn read_dir_recursive(path: &str) -> Result<Vec<DirEntry>, String> {
     Ok(entries)
 }
 
+#[tauri::command]
+fn read_file_content(path: &str) -> Result<String, String> {
+    fs::read_to_string(path).map_err(|e| e.to_string())
+}
+
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -95,7 +100,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet, read_dir_recursive])
+        .invoke_handler(tauri::generate_handler![greet, read_dir_recursive, read_file_content])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

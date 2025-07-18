@@ -5,10 +5,11 @@ import { ProjectExplorer } from "./ProjectExplorer";
 interface SidebarProps {
   projectPath: string | null;
   onProjectExplorerError: () => void;
-  updateStatusMessage: (message: string) => void; // New prop
+  updateStatusMessage: (message: string) => void;
+  onFileOpen: (filePath: string) => void;
 }
 
-export const Sidebar = ({ projectPath, onProjectExplorerError, updateStatusMessage }: SidebarProps) => {
+export const Sidebar = ({ projectPath, onProjectExplorerError, updateStatusMessage, onFileOpen }: SidebarProps) => {
   const [activeView, setActiveView] = useState("");
 
   const toggleView = (view: string) => {
@@ -34,7 +35,7 @@ export const Sidebar = ({ projectPath, onProjectExplorerError, updateStatusMessa
       </div>
       {activeView && (
         <div className="w-64 p-4 bg-gray-200 dark:bg-gray-800">
-          {activeView === "explorer" && projectPath && <ProjectExplorer projectPath={projectPath} onError={onProjectExplorerError} updateStatusMessage={updateStatusMessage} />}
+          {activeView === "explorer" && projectPath && <ProjectExplorer projectPath={projectPath} onError={onProjectExplorerError} updateStatusMessage={updateStatusMessage} onFileOpen={onFileOpen} />}
           {activeView === "explorer" && !projectPath && <div>Nenhum projeto aberto.</div>}
           {activeView === "run" && <div>Run Functions</div>}
           {activeView === "accounts" && <div>Account Details</div>}

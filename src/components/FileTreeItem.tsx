@@ -11,10 +11,13 @@ import { DirEntry } from "./ProjectExplorer";
 interface FileTreeItemProps {
   entry: DirEntry;
   level: number;
+  onFileOpen: (filePath: string) => void;
 }
 
-export const FileTreeItem = ({ entry, level }: FileTreeItemProps) => {
+export const FileTreeItem = ({ entry, level, onFileOpen }: FileTreeItemProps) => {
   const indentClass = `pl-${level * 4}`;
+
+  console.log("onFileOpen in FileTreeItem:", onFileOpen);
 
   if (entry.is_dir) {
     return (
@@ -35,6 +38,7 @@ export const FileTreeItem = ({ entry, level }: FileTreeItemProps) => {
                 key={child.path}
                 entry={child}
                 level={level + 1}
+                onFileOpen={onFileOpen}
               />
             ))}
           </AccordionContent>
@@ -45,6 +49,7 @@ export const FileTreeItem = ({ entry, level }: FileTreeItemProps) => {
     return (
       <div
         className={cn("flex items-center py-1 cursor-pointer hover:bg-accent/50 text-xs", indentClass)}
+        onClick={() => onFileOpen(entry.path)}
       >
         <FileText size={16} className="mr-1 text-foreground text-xs" />
         <span>{entry.name}</span>

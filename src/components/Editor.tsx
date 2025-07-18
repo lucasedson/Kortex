@@ -4,8 +4,13 @@ import StarterKit from '@tiptap/starter-kit';
 import React, { useState, useEffect } from 'react';
 import { RxFontBold, RxFontItalic, RxStrikethrough, RxUnderline, RxCode } from 'react-icons/rx';
 import { Placeholder } from '@tiptap/extensions'
+import {Markdown} from 'tiptap-markdown';
 
-const TiptapEditor = () => {
+interface EditorProps {
+  fileContent: string;
+}
+
+const TiptapEditor = ({ fileContent }: EditorProps) => {
 
 
     const editor = useEditor({
@@ -16,6 +21,9 @@ const TiptapEditor = () => {
             
         }),
         StarterKit,
+        Markdown.configure({
+          html: true, // Allows HTML within Markdown
+        }),
     ],
 
     editorProps: {
@@ -34,6 +42,12 @@ const TiptapEditor = () => {
       editor.setEditable(isEditable)
     }
   }, [isEditable, editor])
+
+  useEffect(() => {
+    if (editor && fileContent !== editor.getHTML()) {
+      editor.commands.setContent(fileContent);
+    }
+  }, [fileContent, editor]);
 
   return (
     <div className='min-h-full w-[100%] mx-auto shadow-lg max-w-[70vw] pt-16 pl-4 pr-4 prose prose-red prose-h1:text-left'>
