@@ -9,6 +9,7 @@ import TiptapEditor from "./components/Editor"; // Assuming this is your editor 
 import { AppMenu } from "./components/AppMenu";
 import { NewProjectForm } from "./components/NewProjectForm";
 
+
 function App() {
   const [projectPath, setProjectPath] = useState<string | null>(null);
   const [projectName, setProjectName] = useState("Nenhum projeto aberto");
@@ -18,6 +19,7 @@ function App() {
   const [currentFileContent, setCurrentFileContent] = useState<string>("");
 
   useEffect(() => {
+
     const getProject = async () => {
       const path : any = await actualProject();
       if (path) {
@@ -72,6 +74,7 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen bg-white text-zinc-900 dark:bg-gray-900 dark:text-zinc-50">
+
       <AppMenu onNewProjectClick={handleNewProjectClick} />
       <div className="flex flex-grow overflow-hidden">
         <Sidebar
