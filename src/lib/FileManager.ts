@@ -71,3 +71,14 @@ export async function deleteFile(filePath: string) {
   alert(`Falha ao deletar o arquivo. Verifique o caminho e as permissões do sistema.`);
  }
 }
+
+export async function deleteDir(dirPath: string) {
+ console.log(`Tentando deletar a pasta ${dirPath}`);
+ try {
+  await remove(dirPath, {recursive: true});
+ } catch (error) {
+  console.error("Erro ao deletar a pasta:", error);
+  alert(`Falha ao deletar a pasta. Verifique o caminho e as permissões do sistema.`);
+ }
+}
+

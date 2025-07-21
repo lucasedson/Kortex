@@ -4,8 +4,15 @@ import { FileTreeItem } from "./FileTreeItem";
 import { listen } from "@tauri-apps/api/event";
 import { actualProject } from "@/lib/ProjectManager";
 import { RxFilePlus } from "react-icons/rx";
-import { FolderPlusIcon } from "lucide-react";
-import { createFile, createDir, deleteFile } from "@/lib/FileManager";
+import { FolderPlusIcon, RefreshCcw } from "lucide-react";
+import { createFile, createDir } from "@/lib/FileManager";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuPortal,
+} from "./ui/dropdown-menu";
 
 export interface DirEntry {
   path: string;
@@ -20,6 +27,7 @@ interface ProjectExplorerProps {
 
 export function ProjectExplorer({ onFileOpen }: ProjectExplorerProps) {
   const [projectTree, setProjectTree] = useState<DirEntry[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   async function refreshProjectTree() {
     try {
@@ -35,10 +43,10 @@ export function ProjectExplorer({ onFileOpen }: ProjectExplorerProps) {
     }
   }
 
- async function newFile() {
-   try {
-     const dir = await actualProject();
-     console.log(dir);
+  async function newFile() {
+    try {
+      const dir = await actualProject();
+      console.log(dir);
       await createFile(dir + "/newFile.md");
     } catch (error) {
       console.error("Error creating file:", error);
@@ -46,17 +54,6 @@ export function ProjectExplorer({ onFileOpen }: ProjectExplorerProps) {
     console.log("newFile");
     refreshProjectTree();
   }
-
-  async function deleteSelectedFile(filePath: string) {
-    try {
-      await deleteFile(filePath);
-      refreshProjectTree();
-    } catch (error) {
-      console.error("Error deleting file:", error);
-    }
-  }
-
-
 
   async function newFolder() {
     try {
@@ -78,38 +75,66 @@ export function ProjectExplorer({ onFileOpen }: ProjectExplorerProps) {
     });
 
     return () => {
-      unlisten.then(f => f());
+      unlisten.then((f) => f());
     };
   }, []);
 
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMenuPosition({ x: e.clientX, y: e.clientY });
+    setIsMenuOpen(true);
+  };
+
   return (
-    <div className="w-full h-full text-foreground p-4 border border-gray-500/25">
-      <h2 className="text-lg font-bold mb-4">Project Explorer</h2>
-      <div className="mb-4">
-        <button
-          className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700"
-          onClick={newFile}          
-        >
-          <RxFilePlus className="w-4 h-4" />
-        </button>
+    <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+      <div
+        className="w-full h-full text-foreground p-4 border border-gray-500/25"
+        onContextMenu={handleContextMenu}
+      >
+        <h2 className="text-lg font-bold mb-4">Project Explorer</h2>
+        <div className="mb-4">
           <button
-          className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700"
-          onClick={newFolder}
+            className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700"
+            onClick={newFile}
+          >
+            <RxFilePlus className="w-4 h-4" />
+          </button>
+          <button
+            className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700"
+            onClick={newFolder}
+          >
+            <FolderPlusIcon className="w-4 h-4" />
+          </button>
 
-          
-        >
-          <FolderPlusIcon className="w-4 h-4" />
-        </button>
+          <button
+            className="p-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-700"
+            onClick={refreshProjectTree}
+          >
+            <RefreshCcw className="w-4 h-4" />
+          </button>
 
-      <div className="border-b border-gray-500/25"></div>
-
-
+          <div className="border-b border-gray-500/25"></div>
+        </div>
+        <ul>
+          {projectTree.map((entry) => (
+            <FileTreeItem
+              key={entry.path}
+              entry={entry}
+              level={0}
+              onFileOpen={onFileOpen}
+              onRefresh={refreshProjectTree}
+            />
+          ))}
+        </ul>
       </div>
-      <ul>
-        {projectTree.map((entry) => (
-          <FileTreeItem key={entry.path} entry={entry} level={0} onFileOpen={onFileOpen} />
-        ))}
-      </ul>
-    </div>
+      <DropdownMenuPortal>
+        <DropdownMenuContent style={{ position: 'fixed', top: menuPosition.y, left: menuPosition.x }}>
+          <DropdownMenuItem onClick={newFile}>New File</DropdownMenuItem>
+          <DropdownMenuItem onClick={newFolder}>New Folder</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
   );
 }
