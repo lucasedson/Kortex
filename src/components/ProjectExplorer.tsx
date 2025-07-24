@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuPortal,
 } from "./ui/dropdown-menu";
 
@@ -23,6 +22,9 @@ export interface DirEntry {
 
 interface ProjectExplorerProps {
   onFileOpen: (filePath: string) => void;
+  projectPath: string;
+  onError: () => void;
+  updateStatusMessage: (message: string) => void;
 }
 
 export function ProjectExplorer({ onFileOpen }: ProjectExplorerProps) {

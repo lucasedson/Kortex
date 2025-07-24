@@ -1,7 +1,7 @@
 
 import { closeProject } from "@/lib/ProjectManager";
 import { getCurrent } from "@tauri-apps/plugin-window";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "@/components/components/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "./ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/lib/ThemeContext";
 

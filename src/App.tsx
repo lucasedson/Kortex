@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { readTextFile, BaseDirectory } from "@tauri-apps/plugin-fs";
+import { readTextFile} from "@tauri-apps/plugin-fs";
 import "./App.css";
 import { HomePage } from "./components/HomePage";
 import { Sidebar } from "./components/Sidebar";
@@ -15,7 +15,7 @@ function App() {
   const [projectName, setProjectName] = useState("Nenhum projeto aberto");
   const [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
-  const [currentFilePath, setCurrentFilePath] = useState<string | null>(null);
+  const [_currentFilePath, setCurrentFilePath] = useState<string | null>(null);
   const [currentFileContent, setCurrentFileContent] = useState<string>("");
 
   useEffect(() => {
@@ -63,7 +63,7 @@ function App() {
 
   const handleFileOpen = async (filePath: string) => {
     try {
-      const content = await readTextFile(filePath, { dir: BaseDirectory.Home }); // Assuming files are within user's home directory for simplicity, adjust as needed
+      const content = await readTextFile(filePath); // Assuming files are within user's home directory for simplicity, adjust as needed
       setCurrentFilePath(filePath);
       setCurrentFileContent(content);
     } catch (error) {

@@ -9,14 +9,16 @@ export interface TauriFileEntry {
   isDir: boolean;
 }
 
-const store = await load('actualProject.json', { autoSave: false });
+
 
 export async function actualProject() {
+  const store = await load('actualProject.json', { autoSave: false });
   const projectPath = await store.get('actualProject');
   return projectPath as string | null;
 }
 
 export async function closeProject() {
+  const store = await load('actualProject.json', { autoSave: false });
   await store.set('actualProject', null);
   await store.save();
   await emit('project-changed');
@@ -44,6 +46,7 @@ export async function createNewProject(projectName: string): Promise<string | nu
     });
 
     if (typeof filePath === 'string') {
+      const store = await load('actualProject.json', { autoSave: false });
       await mkdir(filePath, { recursive: true });
       await store.set('actualProject', filePath);
       await store.save();
@@ -68,6 +71,7 @@ export async function openProject(): Promise<string | null> {
     });
 
     if (typeof selectedPath === 'string') {
+      const store = await load('actualProject.json', { autoSave: false });
       await store.set('actualProject', selectedPath);
       await store.save();
       await emit('project-changed');

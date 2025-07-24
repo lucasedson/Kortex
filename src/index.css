@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-code-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa07;
+  margin: 1em 0; /* Essencial para dar espaço no editor */
+}
+
+
 .tiptap p.is-editor-empty:first-child::before {
     font-size: 1em;
     

@@ -1,17 +1,21 @@
 import { useEditor, EditorContent} from '@tiptap/react';
 import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus'
 import StarterKit from '@tiptap/starter-kit';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RxFontBold, RxFontItalic, RxStrikethrough, RxUnderline, RxCode, RxTable, RxLink1, RxHeading  } from 'react-icons/rx';
 import { PiSigmaFill } from "react-icons/pi";
 import { Placeholder } from '@tiptap/extensions'
 import {Markdown} from 'tiptap-markdown';
+import { CustomNoteCardExtension } from './lib/tiptap/CodeEditorExtension';
+import { CodeEditor } from './CodeEditor';
 
 interface EditorProps {
   fileContent: string;
 }
 
 const TiptapEditor = ({ fileContent }: EditorProps) => {
+
+  
 
 
     const editor = useEditor({
@@ -25,18 +29,25 @@ const TiptapEditor = ({ fileContent }: EditorProps) => {
         Markdown.configure({
           html: true, // Allows HTML within Markdown
         }),
+        CustomNoteCardExtension
     ],
 
     editorProps: {
       attributes: {
         class: 'min-h-[90vh] focus:outline-none text-left items-start',
       },
+    },
+    content: fileContent,
+    onUpdate({ editor }) {
+      const content = editor.getHTML();
+      console.log(content);
     }
     
   });
 
-    const [showMenu, setShowMenu] = React.useState(true)
-    const [isEditable, setIsEditable] = React.useState(true)
+
+    // const [showMenu, setShowMenu] = React.useState(true)
+    const [isEditable, _setIsEditable] = React.useState(true)
 
   useEffect(() => {
     if (editor) {
@@ -50,11 +61,26 @@ const TiptapEditor = ({ fileContent }: EditorProps) => {
     }
   }, [fileContent, editor]);
 
+  const addCustomCard = () => {
+    if (editor) {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: 'customNoteCard', // 1. O 'name' da sua extensão
+
+        })
+        .run();
+    }
+  };
+
+
+
   return (
     <div className='min-h-full w-[100%] mx-auto shadow-lg max-w-[70vw] pt-16 pl-4 pr-4 prose prose-red prose-h1:text-left'>
         
-    
-    
+        <button className='flex gap-2 items-center' onClick={addCustomCard}>Adicionar Card <PiSigmaFill /></button>
+        {/* <CodeEditor /> */}
         <EditorContent editor={editor}  
         className=''
         
@@ -88,7 +114,7 @@ const TiptapEditor = ({ fileContent }: EditorProps) => {
                 <RxHeading />
                </button>
 
-                <button className='shadow text-xl'>
+                <button className='shadow text-xl' onClick={() => addCustomCard()}>
                   <RxCode />
                 </button>
 

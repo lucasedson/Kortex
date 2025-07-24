@@ -3,7 +3,7 @@ import { File, Play, User, Settings } from "lucide-react";
 import { ProjectExplorer } from "./ProjectExplorer";
 
 interface SidebarProps {
-  projectPath: string | null;
+  projectPath: any;
   onProjectExplorerError: () => void;
   updateStatusMessage: (message: string) => void;
   onFileOpen: (filePath: string) => void;

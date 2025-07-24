@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Store } from "@tauri-apps/plugin-store";
+// import { Store } from "@tauri-apps/plugin-store";
 
 type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: ReactNode;
   defaultTheme?: Theme;
-  storageKey?: string;
+  storageKey?: string; // Mantido por consistência, mas o nome do arquivo é fixo
 };
 
 type ThemeProviderState = {
@@ -21,8 +21,6 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-const themeStore = new Store("theme.dat");
-
 export function ThemeProvider({
   children,
   defaultTheme = "system",
@@ -33,7 +31,7 @@ export function ThemeProvider({
     const storedTheme = localStorage.getItem(storageKey);
     if (storedTheme) {
       return storedTheme as Theme;
-    }
+    }''
     return defaultTheme;
   });
 
@@ -48,12 +46,12 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
-      themeStore.set(storageKey, systemTheme);
+      // themeStore.set(storageKey, systemTheme);
     } else {
       root.classList.add(theme);
-      themeStore.set(storageKey, theme);
+      // themeStore.set(storageKey, theme);
     }
-    themeStore.save();
+    // themeStore.save();
   }, [theme, storageKey]);
 
   const setTheme = (theme: Theme) => {
